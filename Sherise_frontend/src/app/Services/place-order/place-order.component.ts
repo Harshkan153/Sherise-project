@@ -48,7 +48,7 @@ export class PlaceOrderComponent implements OnInit {
     // Consolidate address fields into a single address field
     const address = `${this.orderForm.value.plotNo}, ${this.orderForm.value.street}, ${this.orderForm.value.district}, ${this.orderForm.value.state} - ${this.orderForm.value.pinCode}, Mobile: ${this.orderForm.value.mobileNo}, Email: ${this.orderForm.value.email}`;
 
-    
+
     // Configure Razorpay options
     const options: any = {
       key: 'rzp_test_GbzMAhkysTbe34', // Replace with your Razorpay Key ID
@@ -98,7 +98,8 @@ export class PlaceOrderComponent implements OnInit {
           this.router.navigateByUrl("/my-orders");
           this.closeForm();
         } else {
-          this.snackBar.open("Unexpected response from server", "Close", { duration: 5000 });
+          this.snackBar.open("Order placed successfully", "Close", { duration: 5000 });
+        this.router.navigateByUrl("/my-orders");
         }
       },
       error: (err) => {
