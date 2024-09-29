@@ -19,6 +19,7 @@ public class HealthCampRegistration {
     private String name;
     private String email;
     private String workshop;
+    private String date;
 
 
 }
