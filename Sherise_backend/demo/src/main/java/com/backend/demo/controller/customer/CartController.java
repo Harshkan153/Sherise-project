@@ -4,6 +4,7 @@ import com.backend.demo.dto.AddProductInCartDto;
 import com.backend.demo.dto.OrderDto;
 import com.backend.demo.dto.PlaceOrderDto;
 import com.backend.demo.exceptions.ValidationException;
+import com.backend.demo.services.customer.cart.CancleOrderService;
 import com.backend.demo.services.customer.cart.CartService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -20,6 +21,7 @@ import java.util.List;
 public class CartController {
 
     private final CartService cartService;
+    private final CancleOrderService cancleOrderService;
     private static final Logger logger = LoggerFactory.getLogger(CartController.class); // Initialize logger
 
     @PostMapping("/cart")
@@ -106,6 +108,16 @@ public class CartController {
     @GetMapping("/myOrders/{userId}")
     public ResponseEntity<List<OrderDto>> getMyPlacedOrders(@PathVariable Long userId) {
         return ResponseEntity.ok(cartService.getMyPlacedOrders(userId));
+    }
+
+
+    @GetMapping("/order/cancel/{orderId}/{status}")
+    public ResponseEntity<?> cancelOrder(@PathVariable Long orderId, @PathVariable String status) {
+        OrderDto orderDto = cancleOrderService.cancleOrder(orderId, status);
+        if (orderDto == null) {
+            return new ResponseEntity<>("Something went wrong or invalid status!", HttpStatus.BAD_REQUEST);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(orderDto);
     }
 
     // Define ErrorResponse class

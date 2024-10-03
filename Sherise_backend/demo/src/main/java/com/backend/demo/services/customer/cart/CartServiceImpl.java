@@ -116,6 +116,7 @@ public class CartServiceImpl implements CartService {
         return order.getOrderStatus() == OrderStatus.Placed ||
                 order.getOrderStatus() == OrderStatus.Shipped ||
                 order.getOrderStatus() == OrderStatus.Delivered;
+
     }
 
     // Helper method to generate unique tracking ID
@@ -352,7 +353,7 @@ public class CartServiceImpl implements CartService {
 
     public List<OrderDto> getMyPlacedOrders(Long userId) {
         // Define the valid order statuses
-        List<OrderStatus> orderStatusList = List.of(OrderStatus.Placed, OrderStatus.Shipped, OrderStatus.Delivered);
+        List<OrderStatus> orderStatusList = List.of(OrderStatus.Placed, OrderStatus.Shipped, OrderStatus.Delivered, OrderStatus.Cancelled);
 
         // Call the corrected method from OrderRepository and map Orders to OrderDto
         return orderRepository.findAllByUserIdAndOrderStatusIn(userId, orderStatusList)

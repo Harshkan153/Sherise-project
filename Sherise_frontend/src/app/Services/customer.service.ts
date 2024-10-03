@@ -113,6 +113,10 @@ export class CustomerService {
       userId: userId
     };
 
+
+
+
+
     if (!userId) {
       console.error('User ID is not available.');
       return throwError(() => new Error('User ID is missing'));
@@ -124,6 +128,17 @@ export class CustomerService {
       catchError(this.handleError)
     );
   }
+
+
+cancelOrder(orderId: number, status: string): Observable<any> {
+  return this.http.get<any>(`${BASIC_URL}api/customer/order/cancel/${orderId}/${status}`, {
+    headers: this.createAuthorizationHeader(),
+  }).pipe(
+    catchError(this.handleError)
+  );
+}
+
+
 
   getCartByUserId(): Observable<any> {
     const userId = this.userStorageService.getUserId();
