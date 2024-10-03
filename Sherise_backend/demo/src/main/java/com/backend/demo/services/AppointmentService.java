@@ -23,9 +23,18 @@ public class AppointmentService {
         // Save the appointment to the repository
         Appointmentuser savedAppointment = appointmentRepository.save(appointmentuser);
 
-        // Send a confirmation email after saving the appointment
+        // Prepare email content for appointment confirmation
         String subject = "Appointment Confirmation";
-        String text = "Dear " + appointmentuser.getName() + ",\n\nYour appointment is confirmed for " + appointmentuser.getDate()+ ".";
+        String text = "Dear " + appointmentuser.getName() + ",\n\n" +
+                "Your appointment has been confirmed.\n" +
+                "Appointment Details:\n" +
+                "Date: " + appointmentuser.getDate() + "\n" +
+
+                "We look forward to meeting you. If you need to reschedule, please contact us.\n\n" +
+                "Best regards,\n" +
+                "[SheRise]";
+
+        // Send confirmation email
         emailService.sendEmail(appointmentuser.getEmail(), subject, text, false);
 
         return savedAppointment;

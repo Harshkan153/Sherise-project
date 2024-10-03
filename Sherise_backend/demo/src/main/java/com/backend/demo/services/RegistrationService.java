@@ -18,9 +18,18 @@ public class RegistrationService {
         // Save registration details to the repository
         Registration savedRegistration = registrationRepository.save(registration);
 
+        // Prepare email content for the user
+        String subject = "Workshop Registration Confirmation";
+        String text = "Dear " + registration.getName() + ",\n\n" +
+                "Thank you for registering for the " + registration.getWorkshop() + " workshop.\n\n" +
+                "Here are your registration details:\n" +
+                "Workshop: " + registration.getWorkshop() + "\n" +
+
+                "We are excited to have you join us. If you have any questions, feel free to reach out.\n\n" +
+                "Best regards,\n" +
+                "[SheRise]";
+
         // Send a confirmation email after registration
-        String subject = "Registration Confirmation";
-        String text = "Dear " + registration.getName() + ",\n\nThank you for registering!";
         emailService.sendEmail(registration.getEmail(), subject, text, false);
 
         return savedRegistration;
